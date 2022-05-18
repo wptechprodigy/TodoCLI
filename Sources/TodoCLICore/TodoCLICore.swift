@@ -12,7 +12,10 @@ public struct TodoCLI: ParsableCommand {
     public static let configuration = CommandConfiguration(
         commandName: "todo",
         abstract: "A Swift command-line Todo App tool to manage todos",
-        subcommands: [ListCommand.self]
+        subcommands: [
+            ListCommand.self,
+            AddCommand.self
+        ]
     )
 
     public init() {}
