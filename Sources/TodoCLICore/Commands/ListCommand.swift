@@ -16,7 +16,13 @@ struct ListCommand: ParsableCommand {
 
     func run() throws {
         let todos: [Todo] = TodoCLIStore().getTodos()
-        
-        debugPrint(todos)
+
+        if todos.count > 0 {
+            for (index, todo) in todos.enumerated() {
+                todo.isCompleted ? print("(\(index)*) \(todo)") : print("(\(index)) \(todo)")
+            }
+        } else {
+            debugPrint(todos)
+        }
     }
 }
