@@ -14,7 +14,8 @@ public struct TodoCLI: ParsableCommand {
         abstract: "A Swift command-line Todo App tool to manage todos",
         subcommands: [
             ListCommand.self,
-            AddCommand.self
+            AddCommand.self,
+            DeleteCommand.self
         ]
     )
 
