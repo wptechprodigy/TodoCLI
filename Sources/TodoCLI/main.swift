@@ -1,0 +1,3 @@
+import TodoCLICore
+
+TodoCLI.main()
