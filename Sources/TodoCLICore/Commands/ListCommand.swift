@@ -15,6 +15,8 @@ struct ListCommand: ParsableCommand {
     )
 
     func run() throws {
-        print("Listing all todos...")
+        let todos: [Todo] = TodoCLIStore().getTodos()
+        
+        debugPrint(todos)
     }
 }
