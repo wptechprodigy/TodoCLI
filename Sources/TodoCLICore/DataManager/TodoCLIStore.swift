@@ -43,6 +43,9 @@ final class TodoCLIStore: ItemStorable {
     }
 
     func add(_ todo: Todo) {
+        if todoList.contains(todo) {
+            
+        }
         todoList.append(todo)
         save(todoList)
     }
