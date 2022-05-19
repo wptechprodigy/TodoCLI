@@ -15,7 +15,8 @@ public struct TodoCLI: ParsableCommand {
         subcommands: [
             ListCommand.self,
             AddCommand.self,
-            DeleteCommand.self
+            DeleteCommand.self,
+            CheckCommand.self
         ]
     )
 

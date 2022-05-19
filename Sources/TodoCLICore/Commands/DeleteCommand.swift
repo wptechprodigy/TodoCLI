@@ -11,7 +11,7 @@ import ArgumentParser
 struct DeleteCommand: ParsableCommand {
     public static let configuration = CommandConfiguration(
         commandName: "delete",
-        abstract: "Delete a specific todo from saved todos."
+        abstract: "Deletes a specific todo from saved todos."
     )
 
     @Argument(help: "The id of the todo to be deleted.")

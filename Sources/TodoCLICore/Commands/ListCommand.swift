@@ -11,7 +11,7 @@ import ArgumentParser
 struct ListCommand: ParsableCommand {
     public static let configuration = CommandConfiguration(
         commandName: "list",
-        abstract: "List the already registered todos."
+        abstract: "Lists the already saved todos."
     )
 
     func run() throws {

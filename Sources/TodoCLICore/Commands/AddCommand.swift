@@ -11,7 +11,7 @@ import Foundation
 struct AddCommand: ParsableCommand {
     public static let configuration = CommandConfiguration(
         commandName: "add",
-        abstract: "Add a new todo to already saved todos."
+        abstract: "Adds a new todo to already saved todos."
     )
 
     @Argument(help: "The title of the todo")
