@@ -18,6 +18,7 @@ struct DeleteCommand: ParsableCommand {
     private var id: Int
 
     func run() throws {
-        print("Removing todo with id: \(id) from todos...")
+        let sharedInstance = TodoCLIStore.shared
+        sharedInstance.deleteTodo(at: id)
     }
 }
