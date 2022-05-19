@@ -15,66 +15,65 @@ protocol ItemStorable {
 
 final class TodoCLIStore: ItemStorable {
 
-    // MARK: - Properties
-    private var todoList: [Todo] = []
+    static let shared: TodoCLIStore = TodoCLIStore()
 
-    private let filename: String
-    private let storageManager: StoreManagable
+    // MARK: - Properties
+    private lazy var todoList: [Todo] = {
+        let url = storageManager.documentsURL(name: filename)
+
+        do {
+            let data = try Data(contentsOf: url)
+            let todoList = try JSONDecoder().decode([Todo].self, from: data)
+            return todoList
+        } catch {
+            print("Error while reading from file: \(error)")
+            return []
+        }
+    }()
+
+    private let filename: String = "MyTodos"
+    private let storageManager: StoreManagable = FileManager.default
 
     // MARK: - Initializer
-    init(filename: String = "MyTodos",
-         storageManager: StoreManagable = FileManager.default) {
-        self.filename = filename
-        self.storageManager = storageManager
-    }
+    private init() {}
 
     // MARK: - Helper methods
     func getTodos() -> [Todo] {
-        saveTodo()
-        loadTodos()
         return todoList
     }
 
     func add(_ todo: Todo) {
         todoList.append(todo)
-        saveTodo()
+        save(todoList)
     }
 
     func checkTodo(at index: Int) {
-        guard var completedTodo = todoList[safe: index] else { return }
+        let actualIndex = index - 1
+        guard var completedTodo = todoList[safe: actualIndex] else { return }
         completedTodo.isCompleted = true
 
-        todoList[index] = completedTodo
-        saveTodo()
+        todoList[actualIndex] = completedTodo
+        save(todoList)
     }
 
     func deleteTodo(at index: Int) {
-        if todoList[safe: index] != nil {
-            todoList.remove(at: index)
-            saveTodo()
+        let actualIndex = index - 1
+
+        if todoList[safe: actualIndex] != nil {
+            todoList.remove(at: actualIndex)
+            save(todoList)
         }
     }
 
     // MARK: - Private helpers
-    private func saveTodo() {
-        let url = storageManager.documentsURL(name: filename)
-
-        do {
-            let data = try JSONEncoder().encode(todoList)
-            try data.write(to: url)
-        } catch {
-            print("Error while writing to file: \(error)")
-        }
-    }
-
-    private func loadTodos() {
+    private func save(_ todos: [Todo]) {
         let url = storageManager.documentsURL(name: filename)
         
         do {
-            let data = try Data(contentsOf: url)
-            todoList = try JSONDecoder().decode([Todo].self, from: data)
+            let data = try JSONEncoder().encode(todos)
+            try data.write(to: url)
         } catch {
-            print("Error while reading from file: \(error)")
+            print("Error while writing to file: \(error)")
         }
     }
 }

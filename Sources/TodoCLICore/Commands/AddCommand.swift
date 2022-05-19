@@ -21,10 +21,8 @@ struct AddCommand: ParsableCommand {
     private var isCompleted: Bool = false
 
     func run() throws {
-        if isCompleted {
-            print("Adding completed: \(title), to the list of todos.")
-        } else {
-            print("\(title) has not yet been completed")
-        }
+        let newTodo: Todo = Todo(title: title)
+        let sharedStore = TodoCLIStore.shared
+        sharedStore.add(newTodo)
     }
 }

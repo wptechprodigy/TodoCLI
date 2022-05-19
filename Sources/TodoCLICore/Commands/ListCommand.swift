@@ -15,11 +15,12 @@ struct ListCommand: ParsableCommand {
     )
 
     func run() throws {
-        let todos: [Todo] = TodoCLIStore().getTodos()
+        let sharedStore = TodoCLIStore.shared
+        let todos: [Todo] = sharedStore.getTodos()
 
         if todos.count > 0 {
             for (index, todo) in todos.enumerated() {
-                todo.isCompleted ? print("(\(index)*) \(todo)") : print("(\(index)) \(todo)")
+                todo.isCompleted ? print("(\(index + 1)*) \(todo.title)") : print("(\(index + 1)) \(todo.title)")
             }
         } else {
             debugPrint(todos)
