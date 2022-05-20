@@ -8,6 +8,7 @@
 import Foundation
 
 protocol ItemStorable {
+    func getTodos() -> [Todo]
     func add(_ todo: Todo)
     func checkTodo(at index: Int)
     func deleteTodo(at index: Int)
@@ -15,7 +16,7 @@ protocol ItemStorable {
 
 final class TodoCLIStore: ItemStorable {
 
-    static let shared: TodoCLIStore = TodoCLIStore()
+    static var shared: TodoCLIStore = TodoCLIStore()
 
     // MARK: - Properties
     private lazy var todoList: [Todo] = {
@@ -31,11 +32,15 @@ final class TodoCLIStore: ItemStorable {
         }
     }()
 
-    private let filename: String = "MyTodos"
-    private let storageManager: StoreManagable = FileManager.default
+    private let filename: String
+    private let storageManager: StoreManagable
 
     // MARK: - Initializer
-    private init() {}
+    public init(filename: String = "MyTodos",
+                storageManager: StoreManagable = FileManager.default) {
+        self.filename = filename
+        self.storageManager = storageManager
+    }
 
     // MARK: - Helper methods
     func getTodos() -> [Todo] {
@@ -43,9 +48,6 @@ final class TodoCLIStore: ItemStorable {
     }
 
     func add(_ todo: Todo) {
-        if todoList.contains(todo) {
-            
-        }
         todoList.append(todo)
         save(todoList)
     }
