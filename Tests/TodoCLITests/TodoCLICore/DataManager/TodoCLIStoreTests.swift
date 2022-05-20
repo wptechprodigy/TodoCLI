@@ -44,4 +44,18 @@ class TodoCLIStoreTests: XCTestCase {
 
         XCTAssertTrue(todos.contains(todo))
     }
+
+    func test_add_whenAnAlreadyAddedTodoisAdded_shouldNotBeAdded() {
+        let todo = Todo(title: "a todo")
+        sut.add(todo)
+        let todosBefore = sut.getTodos()
+        let numberOfTodos = todosBefore.count
+
+        let anotherTodoWithSameTitle = Todo(title: "a todo")
+        sut.add(anotherTodoWithSameTitle)
+        let todosAfter = sut.getTodos()
+        let expectedNumberOfTodos = todosAfter.count
+
+        XCTAssertEqual(numberOfTodos, expectedNumberOfTodos)
+    }
 }
