@@ -71,4 +71,17 @@ class TodoCLIStoreTests: XCTestCase {
 
         XCTAssertEqual(expectedNumberOfTodosAfter, 0)
     }
+
+    func test_getTodos_shouldReturnAlreadyAddedTodos() {
+        let todos: [Todo] = [
+            .init(title: "first todo"),
+            .init(title: "second todo"),
+            .init(title: "third todo")
+        ]
+
+        todos.forEach { sut.add($0) }
+        let currentTodos = sut.getTodos()
+
+        XCTAssertEqual(currentTodos, todos)
+    }
 }
