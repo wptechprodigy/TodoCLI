@@ -65,9 +65,8 @@ class TodoCLIStoreTests: XCTestCase {
         let expectedNumberOfTodos = sut.getTodos().count
         XCTAssertEqual(expectedNumberOfTodos, 1)
 
-        let indexOfTodo = try XCTUnwrap(sut.getTodos().firstIndex(of: todo))
-        sut.deleteTodo(at: indexOfTodo + 1)
-
+        let indexOfTodo = try XCTUnwrap(sut.getTodos().firstIndex(of: todo)) + 1
+        sut.deleteTodo(at: indexOfTodo)
         let expectedNumberOfTodosAfter = sut.getTodos().count
 
         XCTAssertEqual(expectedNumberOfTodosAfter, 0)
