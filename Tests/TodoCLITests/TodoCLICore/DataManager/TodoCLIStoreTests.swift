@@ -59,16 +59,15 @@ class TodoCLIStoreTests: XCTestCase {
         XCTAssertEqual(numberOfTodos, expectedNumberOfTodos)
     }
 
-    func test_delete_whenSpecificTodoNumberIsProvided_shouldRemoveTheTodo() {
+    func test_delete_whenSpecificTodoNumberIsProvided_shouldRemoveTheTodo() throws {
         let todo = Todo(title: "a todo")
         sut.add(todo)
         let expectedNumberOfTodos = sut.getTodos().count
         XCTAssertEqual(expectedNumberOfTodos, 1)
 
-        if let indexOfTodo = sut.getTodos().firstIndex(of: todo) {
-            sut.deleteTodo(at: indexOfTodo + 1)
-            print(sut.getTodos())
-        }
+        let indexOfTodo = try XCTUnwrap(sut.getTodos().firstIndex(of: todo))
+        sut.deleteTodo(at: indexOfTodo + 1)
+
         let expectedNumberOfTodosAfter = sut.getTodos().count
 
         XCTAssertEqual(expectedNumberOfTodosAfter, 0)
